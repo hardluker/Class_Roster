@@ -1,1 +1,125 @@
 #include "Roster.h"
+#include <sstream>
+
+void Roster::parse()
+{
+	
+	for (int i = 0; i < numberOfStudents; i++) 
+	{
+		//Setting up string stream and creating the token
+		istringstream stringStream(studentData[i]);
+		string token;
+
+		//Declaring student variables and attributesQty
+		const int ATTRIBUTES_QTY = 9;
+		string studentID, firstName, lastName, emailAddress;
+		int age, daysInCourse1, daysInCourse2, daysInCourse3;
+		DegreeProgram degreeProgram;
+
+		//Assigning all the attributes
+		for (int j = 1; j <= ATTRIBUTES_QTY; j++) 
+		{
+			getline(stringStream, token, ',');
+
+			switch (j)
+			{
+
+			case 1:
+				studentID = token;
+				break;
+			case 2:
+				firstName = token;
+				break;
+			case 3:
+				lastName = token;
+				break;
+			case 4:
+				emailAddress = token;
+				break;
+			case 5:
+				age = stoi(token);
+				break;
+			case 6:
+				daysInCourse1 = stoi(token);
+				break;
+			case 7:
+				daysInCourse2 = stoi(token);
+				break;
+			case 8:
+				daysInCourse3 = stoi(token);
+				break;
+			case 9:
+				degreeProgram = strToDegreeProgram(token);
+				break;
+			}
+
+
+		}
+		//Adding the parsed data to the roster
+		add(studentID, firstName, lastName, emailAddress, age, daysInCourse1, daysInCourse2, daysInCourse3, degreeProgram);
+
+	}
+}
+
+
+void Roster::add(const string& studentID, const string& firstName, const string& lastName,
+	             const string& emailAddress, int age, int daysInCourse1, 
+	             int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram)
+{
+	//Creating the student object pointer.
+	int daysToCompleteEachCourse[Student::SIZE] = { daysInCourse1, daysInCourse2, daysInCourse3 };
+	Student* student = new Student{ studentID, firstName, lastName, 
+		                            emailAddress, age, 
+		                            daysToCompleteEachCourse, degreeProgram };
+	//Adding the student to the next available slot in the array.
+	for (int i = 0; i < numberOfStudents; i++)
+		if (classRosterArray[i] == nullptr) 
+		{
+			classRosterArray[i] = student;
+			break; //Breaking out to only add once.
+		}
+
+}
+
+
+void Roster::remove(const string& studentID)
+{
+	for (int i = 0; i < numberOfStudents; i++)
+	{
+		if (classRosterArray[i] != nullptr && classRosterArray[i]->getStudentID() == studentID) {
+			classRosterArray[i] = nullptr;
+			return; // Exit the function early if a student was found
+		}
+	}
+	cout << "Student was not found";
+}
+
+void Roster::printAll()
+{
+	for (int i = 0; i < numberOfStudents; i++)
+		if (classRosterArray[i] != nullptr)
+			classRosterArray[i]->print();
+}
+
+
+DegreeProgram Roster::strToDegreeProgram(const string& degreeProgramStr)
+{
+
+	if (strToUpper(degreeProgramStr) == "SECURITY")
+		return DegreeProgram::SECURITY;
+	else if (strToUpper(degreeProgramStr) == "NETWORK")
+		return DegreeProgram::NETWORK;
+	else if (strToUpper(degreeProgramStr) == "SOFTWARE")
+		return DegreeProgram::SOFTWARE;
+	else
+		return DegreeProgram::UNDECIDED; //Handling undefinded case
+
+}
+
+
+string Roster::strToUpper(string string)
+{
+	for (char& c : string)
+		c = toupper(c);
+	return string;
+}

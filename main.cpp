@@ -1,8 +1,11 @@
 #include <iostream>
-#include "Degree.h"
+#include "Roster.h"
+#include "Student.h"
 using namespace std;
 
 int main() {
-	cout << ;
-	
+	Roster roster;
+	roster.parse();
+	roster.printAll();
+	return 0;
 }

@@ -1,6 +1,7 @@
 #pragma once
-enum class DegreeProgram {
+enum DegreeProgram {
 	SECURITY,
 	NETWORK,
-	SOFTWARE
+	SOFTWARE,
+	UNDECIDED
 };
