@@ -114,7 +114,7 @@ void Roster::printAverageDaysInCourse(const string& studentID)
 				sum += daysArray[j];
 			}
 			double average = static_cast<double>(sum) / Student::SIZE;
-			cout << "Student ID: " << classRosterArray[i]->getStudentID() << " The average days to in a course is: " << average << endl;
+			cout << "Student ID: " << classRosterArray[i]->getStudentID() << " The average days in a course is: " << average << endl;
 			return;
 		}
 	}
