@@ -1,7 +1,8 @@
 #pragma once
 #include "Student.h"
+#include <string>
 using namespace std;
-const int numberOfStudents = 5;
+static const int numberOfStudents = 5;
 
 //Creating the array string per instructions
 const string studentData[numberOfStudents] =
@@ -21,9 +22,15 @@ public:
 		     int daysInCourse2, int daysInCourse3, DegreeProgram degreeprogram);
 	void remove(const string& studentID);
 	void printAll();
+	void printAverageDaysInCourse(const string& studentID);
+	void printInvalidEmails();
+	void printByDegreeProgram(DegreeProgram degreeProgram);
+	Student** getClassRosterArray();
+
+	~Roster();
 private:
-	Student* classRosterArray[numberOfStudents] = { nullptr };
 	
+	Student* classRosterArray[numberOfStudents] = { nullptr };
 	//Private utility Methods
 	DegreeProgram strToDegreeProgram(const string& degreeProgramStr);
 	string strToUpper(string string);

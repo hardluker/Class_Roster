@@ -1,4 +1,5 @@
 #include "Roster.h"
+#include <iostream>
 #include <sstream>
 
 void Roster::parse()
@@ -91,17 +92,79 @@ void Roster::remove(const string& studentID)
 			return; // Exit the function early if a student was found
 		}
 	}
-	cout << "Student was not found";
+	cout << "Student was not found with the ID: " << studentID;
 }
 
 void Roster::printAll()
 {
+	cout << "Printing all current students in the roster" << endl;
 	for (int i = 0; i < numberOfStudents; i++)
 		if (classRosterArray[i] != nullptr)
 			classRosterArray[i]->print();
 }
 
+void Roster::printAverageDaysInCourse(const string& studentID)
+{
+	for (int i = 0; i < numberOfStudents; i++)
+	{
+		int sum = 0;
+		if (classRosterArray[i] != nullptr && classRosterArray[i]->getStudentID() == studentID) {
+			const int* daysArray = classRosterArray[i]->getDaysToCompleteEachCourse();
+			for (int j = 0; j < Student::SIZE; j++) {
+				sum += daysArray[j];
+			}
+			double average = static_cast<double>(sum) / Student::SIZE;
+			cout << "Student ID: " << classRosterArray[i]->getStudentID() << " The average days to in a course is: " << average << endl;
+			return;
+		}
+	}
+	cout << "Student was not found with the ID: " << studentID;
+}
 
+//Method for printing invalid emails
+void Roster::printInvalidEmails()
+{
+	for (int i = 0; i < numberOfStudents; i++) {
+		if (classRosterArray[i] != nullptr) {
+			bool atChar = false;
+			bool dotChar = false;
+			bool spaceChar = false;
+			string email = classRosterArray[i]->getEmailAddress();
+			for (char& c : email) {
+				if (c == '@')
+					atChar = true;
+				if (c == '.')
+					dotChar = true;
+				if (c == ' ')
+					spaceChar = true;
+			}
+			if (atChar == false || dotChar == false || spaceChar == true)
+				cout << "Student ID: " << classRosterArray[i]->getStudentID() << " Invalid Email: " << email << endl;
+		}
+		
+	}
+}
+
+//Method for printing the student by degree program
+void Roster::printByDegreeProgram(DegreeProgram degreeProgram)
+{
+	cout << "Printing by Degree Program" << endl;
+	for (int i = 0; i < numberOfStudents; i++) {
+		if (classRosterArray[i] != nullptr && classRosterArray[i]->getDegreeProgram() == degreeProgram) {
+			classRosterArray[i]->print();
+		}
+
+	}
+}
+
+//Accessor method for the classRosterArray
+Student** Roster::getClassRosterArray()
+{
+	return this->classRosterArray;
+}
+
+
+//Utility method for converting strings to DegreeProgram Enums
 DegreeProgram Roster::strToDegreeProgram(const string& degreeProgramStr)
 {
 
@@ -116,10 +179,18 @@ DegreeProgram Roster::strToDegreeProgram(const string& degreeProgramStr)
 
 }
 
-
+//Utility method for converting strings to Uppercase
 string Roster::strToUpper(string string)
 {
 	for (char& c : string)
 		c = toupper(c);
 	return string;
+}
+
+//Deleting allocated memory
+Roster::~Roster()
+{
+	for (int i = 0; i < numberOfStudents; i++)
+		delete this->classRosterArray[i];
+	delete this;
 }
