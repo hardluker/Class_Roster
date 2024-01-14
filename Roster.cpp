@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 
+//Method to parse the data in the string array
 void Roster::parse()
 {
 	
@@ -62,7 +63,7 @@ void Roster::parse()
 	}
 }
 
-
+//Method to add students to the roster
 void Roster::add(const string& studentID, const string& firstName, const string& lastName,
 	             const string& emailAddress, int age, int daysInCourse1, 
 	             int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram)
@@ -82,7 +83,7 @@ void Roster::add(const string& studentID, const string& firstName, const string&
 
 }
 
-
+//Method to remove students from the roster
 void Roster::remove(const string& studentID)
 {
 	for (int i = 0; i < numberOfStudents; i++)
@@ -95,6 +96,7 @@ void Roster::remove(const string& studentID)
 	cout << "Student was not found with the ID: " << studentID;
 }
 
+//Method to print all students
 void Roster::printAll()
 {
 	cout << "Printing all current students in the roster" << endl;
@@ -103,6 +105,7 @@ void Roster::printAll()
 			classRosterArray[i]->print();
 }
 
+//Method to print the average days a student spent in a course
 void Roster::printAverageDaysInCourse(const string& studentID)
 {
 	for (int i = 0; i < numberOfStudents; i++)

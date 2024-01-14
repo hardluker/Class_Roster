@@ -107,6 +107,9 @@ void Student::setDegreeProgram(DegreeProgram degreeProgram)
     this->degreeProgram = degreeProgram;
 }
 
+
+
+//Method for printing out the students information per standardized formatting
 void Student::print()
 {
     cout << getStudentID() << "\t"

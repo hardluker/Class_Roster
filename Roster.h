@@ -18,22 +18,30 @@ const string studentData[numberOfStudents] =
 class Roster
 {
 public:
+
+	//Methods for adding and removing data from the roster
 	void parse();
 	void add(const string& studentID, const string& firstName, const string& lastName,
 		     const string& emailAddress, int age, int daysInCourse1,
 		     int daysInCourse2, int daysInCourse3, DegreeProgram degreeprogram);
 	void remove(const string& studentID);
+
+	//Printing methods
 	void printAll();
 	void printAverageDaysInCourse(const string& studentID);
 	void printInvalidEmails();
 	void printByDegreeProgram(DegreeProgram degreeProgram);
+
+	//Accessor Method
 	Student** getClassRosterArray();
 
+	//Destructor
 	~Roster();
 private:
 	
 	Student* classRosterArray[numberOfStudents] = { nullptr };
-	//Private utility Methods
+
+	//Additional utility methods
 	DegreeProgram strToDegreeProgram(const string& degreeProgramStr);
 	string strToUpper(string string);
 };
