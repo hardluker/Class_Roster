@@ -6,6 +6,7 @@ using namespace std;
 int main() {
 	cout << "Course Title: Scripting and Programming Applications - C867" << endl
 		 << "Programming Language Used: C++" << endl
+		 << "Name: Donald Azevedo" << endl
 		 << "WGU Student ID: 011371173" << endl;
 
 	Roster classRoster;
